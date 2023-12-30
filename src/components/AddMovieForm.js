@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addMovie } from './../actions/movieActions';
+import { addMovie } from './../store/actions/movieActions';
 import { useDispatch } from 'react-redux';
 
 import { Link, useHistory } from 'react-router-dom';

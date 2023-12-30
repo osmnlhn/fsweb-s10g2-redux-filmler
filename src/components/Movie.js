@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { deleteMovie } from '../actions/movieActions';
-import { addFavorite, removeFavorite } from "../actions/favoritesActions";
+import { deleteMovie } from '../store/actions/movieActions';
+import { addFavorite, removeFavorite } from "../store/actions/favoritesActions";
 
 
 const Movie = (props) => {
@@ -10,18 +10,14 @@ const Movie = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  
 
-  const movies = useSelector(state => state.movies);
+  const movies = useSelector((s)=>s.movie.movies);
+  const infavorites=useSelector((store)=>store.favorites.favorites.find(fav=>fav.id==id))
 
   const handleDelete = () => {
     dispatch(deleteMovie(movie.id));
     history.push('/movies');
   };
-  
-  const FavoriEkle = () => {
-    dispatch(addFavorite(movie));
-    history.push('/movies');  };
 
 
   const movie = movies.find(movie => movie.id === Number(id));
@@ -55,7 +51,21 @@ const Movie = (props) => {
       </div>
       <div className="px-5 py-3 border-t border-zinc-200 flex justify-end gap-2">
         <button type="button" onClick={handleDelete} className="myButton bg-red-600 hover:bg-red-500">Sil</button>
-        <button className="myButton bg-blue-600 hover:bg-blue-500 ">Favorilere ekle</button>
+
+        <button 
+        
+        onClick={()=> {
+          if (infavorites) {
+            dispatch(removeFavorite(movie.id))
+          }
+          else (
+            dispatch(addFavorite(movie))
+          )
+        }
+        
+        } 
+        
+        className="myButton bg-blue-600 hover:bg-blue-500 ">{infavorites ? " Favorilerden Çıkar" :" Favorilere Ekle"}</button>
       </div>
     </div>
   );

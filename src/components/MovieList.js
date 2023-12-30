@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const MovieList = (props) => {
   
-  const movies= useSelector(state => state.movies);
+  const movies= useSelector((s) => s.movie.movies);
   return (
     <div className="flex-1">
       <div className="overflow-hidden bg-white rounded-md shadow mb-4 sm:min-h-[400px]">
